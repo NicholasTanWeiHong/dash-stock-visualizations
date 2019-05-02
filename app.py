@@ -136,19 +136,17 @@ for col in range(num_cols):
         Output(
             component_id=f"constituent-dropdown-{graph_index}", component_property='options'),
         [Input(
-            component_id=f"index-dropdown-{graph_index}", component_property='value')]
-    )
+            component_id=f"index-dropdown-{graph_index}", component_property='value')])
     def populate_constituents(market_index):
         market_dict = load_constituents(market_index)
         return [{'label': i, 'value': market_dict[i]} for i in market_dict.keys()]
 
     # Return pandas DataFrame from Yahoo Finance API based on stock selected.
     @app.callback(
-        Output(component_id=f"graph-{graph_index}",
-               component_property='children'),
-        [Input(component_id=f"constituent-dropdown-{graph_index}",
-               component_property='value')]
-    )
+        Output(
+            component_id=f"graph-{graph_index}", component_property='children'),
+        [Input(
+            component_id=f"constituent-dropdown-{graph_index}", component_property='value')])
     def update_graph(ticker):
         start = dt.datetime(year=2000, month=1, day=1)
         end = dt.datetime.now()
@@ -163,8 +161,10 @@ for col in range(num_cols):
             },
             figure={
                 'data': [
+                    # Plot the time series of stock prices.
                     {'x': df.index, 'y': df['Adj Close'],
                         'type': 'line', 'name': 'Price'},
+                    # Plot the time series of stock volumes.
                     {'x': df.index, 'y': df['Volume'], 'type': 'bar',
                         'name': 'Volume', 'yaxis': 'y2', 'opacity': 0.25},
                 ],
@@ -172,12 +172,16 @@ for col in range(num_cols):
                     showlegend=False,
                     title=f'{ticker} Stock Price and Volume',
                     yaxis=dict(
-                        title='Price'
+                        title='Price',
+                        showgrid=False,
+                        zeroline=False,
                     ),
                     yaxis2=dict(
                         title='Volume',
                         overlaying='y',
                         side='right',
+                        showgrid=False,
+                        zeroline=False,
                     ),
                 )
             }
