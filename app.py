@@ -25,7 +25,7 @@ INDEX_SLUGS = {
 
 
 def load_constituents(market_index):
-    # Parse Yahoo Finance for Constituent Data Per Market Index
+    # Parse Yahoo Finance for Constituent Stocks Per Market Index
     resp = requests.get(
         f'https://sg.finance.yahoo.com/quote/{INDEX_SLUGS[market_index]}/components?p={INDEX_SLUGS[market_index]}')
     soup = bs.BeautifulSoup(resp.text, features='lxml')
@@ -38,6 +38,7 @@ def load_constituents(market_index):
         ticker = row.findAll('td')[0].text
         tickers[name] = ticker
 
+    # Sort the Dictionary of Stock Name-Stock Ticker Items
     sorted_tickers = {}
 
     for key, value in sorted(tickers.items()):
@@ -46,7 +47,7 @@ def load_constituents(market_index):
     return sorted_tickers
 
 
-# Initialise App and App Layout Definitions
+# Initialise the App and Define the App Layout
 app = dash.Dash(__name__, external_stylesheets=external_css)
 
 app.layout = html.Div(
@@ -138,8 +139,8 @@ for col in range(2):
         market_dict = load_constituents(market_index)
         return [{'label': i, 'value': market_dict[i]} for i in market_dict.keys()]
 
-
     # Call Yahoo Finance API based on Constituent Stock Selected
+
     @app.callback(
         Output(component_id=f"graph-{graph_index}",
                component_property='children'),
