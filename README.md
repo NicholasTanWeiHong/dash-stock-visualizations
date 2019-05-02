@@ -1,7 +1,7 @@
 # dash-stock-visualizations
 This is a visualization framework for stocks written with the Dash Framework by [Plotly](https://plot.ly/).
 
-![App Screenshot](https://github.com/NicholasTanWeiHong/dash-stock-visualizations/blob/master/images/screenshot.PNG "Logo Title Text 1")
+![App Screenshot](https://github.com/NicholasTanWeiHong/dash-stock-visualizations/blob/master/images/screenshot.PNG "App Screenshot")
 
 ## Using the App
 The app uses the [requests](https://realpython.com/python-requests/) and [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) libraries to parse [Yahoo Finance](https://sg.finance.yahoo.com/) based on pre-determined slugs.

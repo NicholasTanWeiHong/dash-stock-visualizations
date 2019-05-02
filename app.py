@@ -10,10 +10,11 @@ import datetime as dt
 import bs4 as bs
 import requests
 
-# Import External Stylesheets from Materialize CSS
-external_css = [open('stylesheets.txt', 'r').read()]
+# Import external stylesheets from Materialize CSS.
+external_css = [
+    'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css']
 
-# Define Slugs from Yahoo Finance SG
+# Define slugs for each stock index in Yahoo Finance.
 INDEX_SLUGS = {
     'Dow Jones Index': '%5EDJI',
     'FTSE 100 Index': '%5EFTSE',
@@ -23,9 +24,10 @@ INDEX_SLUGS = {
     'Hang Seng Index': '%5EHSI',
 }
 
+# Parse Yahoo Finance to get all constituent stocks for the given market index.
+
 
 def load_constituents(market_index):
-    # Parse Yahoo Finance for Constituent Stocks Per Market Index
     resp = requests.get(
         f'https://sg.finance.yahoo.com/quote/{INDEX_SLUGS[market_index]}/components?p={INDEX_SLUGS[market_index]}')
     soup = bs.BeautifulSoup(resp.text, features='lxml')
@@ -38,23 +40,23 @@ def load_constituents(market_index):
         ticker = row.findAll('td')[0].text
         tickers[name] = ticker
 
-    # Sort the Dictionary of Stock Name-Stock Ticker Items
+    # Sort the dictionary alphabetically.
     sorted_tickers = {}
-
     for key, value in sorted(tickers.items()):
         sorted_tickers[key] = value
 
     return sorted_tickers
 
 
-# Initialise the App and Define the App Layout
+# Initialise the Dash app
 app = dash.Dash(__name__, external_stylesheets=external_css)
 
+# Define the layout for the Dash application.
 app.layout = html.Div(
 
     children=[
 
-        # Header
+        # Header Object
         html.H2(
             style={"textAlign": "center"},
             children='Equity Market Visualisation Dashboard'),
@@ -123,12 +125,13 @@ app.layout = html.Div(
             ])
     ])
 
-# Generate Callbacks between Market Index-Constituents and Constituent-Yahoo Finance API
-for col in range(2):
+# Loop through each column and generate callbacks between components.
+num_cols = 2
+for col in range(num_cols):
 
     graph_index = col + 1
 
-    # Populate Constituents Dropdown List based on Market Index selected
+    # Populate the constituents dropdown list based on market index selected.
     @app.callback(
         Output(
             component_id=f"constituent-dropdown-{graph_index}", component_property='options'),
@@ -139,8 +142,7 @@ for col in range(2):
         market_dict = load_constituents(market_index)
         return [{'label': i, 'value': market_dict[i]} for i in market_dict.keys()]
 
-    # Call Yahoo Finance API based on Constituent Stock Selected
-
+    # Return pandas DataFrame from Yahoo Finance API based on stock selected.
     @app.callback(
         Output(component_id=f"graph-{graph_index}",
                component_property='children'),
