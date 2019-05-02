@@ -13,7 +13,7 @@ import requests
 # Import External Stylesheets from Materialize CSS
 external_css = [open('stylesheets.txt', 'r').read()]
 
-# Define Slugs for Yahoo Finance Website Parser
+# Define Slugs from Yahoo Finance SG
 INDEX_SLUGS = {
     'Dow Jones Index': '%5EDJI',
     'FTSE 100 Index': '%5EFTSE',
