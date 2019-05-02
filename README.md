@@ -11,6 +11,6 @@ Given a selected Market Index, it uses Dash Callbacks to populate a second Dropd
 Finally, it plots Historical Price and Volume based on a pandas DataFrame which is returned from the Yahoo Finance API.
 
 ## Future Plans
-* Integrate a Date Component from Dash to filter by Periods
+* Integrate [DatePickerSingle Components](https://dash.plot.ly/dash-core-components/datepickersingle) from Dash to filter data by time
 * Implement additional functions for Technical Analysis (E.g. RSI, MACD, Bollinger Bands)
 * Implement the option to overlay price charts of two stocks on the same graph
