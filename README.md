@@ -1,4 +1,4 @@
-# dash-stock-visualizations
+# Stock Visualizations with Dash
 This is a visualization framework for stocks written with the Dash Framework by [Plotly](https://plot.ly/).
 
 ![App Screenshot](https://github.com/NicholasTanWeiHong/dash-stock-visualizations/blob/master/images/screenshot.PNG "App Screenshot")
